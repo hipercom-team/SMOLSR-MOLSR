@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+<meta name="description" content="Implementation of the Simple Multicast OLSR, and Multicats OLSR">
+<meta name="keywords" content="olsr,molsr, implementation,userspace">
+<meta name="author" content="Anis Laouiti">
+<meta name="reply-to" content="Anis.Laouiti@inria.fr">
+<meta name="owner" content="Anis.Laouiti@inria.fr">
+<meta name="copyright" content="HIPERCOM 2005">
+
+
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="icon" href="logo_inria.png" type="image/png">
+
+
+
+<title>
+SMOLSR-MOLSR Implementation
+</title>
+</head>
+<body background="gradient.png" bgcolor="#ffffff">
+<!-- body -->
+<table>
+<tr>
+<td valign="top">
+<center><a href="http://www.inria.fr/">
+<img src="logo_inria.png" alt="INRIA"></a>
+</center>
+
+<center>
+<a href="http://hipercom.inria.fr/">Hipercom</a>
+</center>
+<br>
+<table class="menu">
+<tr><td class="menu"><a href="index.html">MOLSR Home Page</td></tr>
+<tr><td class="menu"><a href="downloads.html">Downloads</td></tr>
+<tr><td class="menu"><a href="documentation.html">Documentation</td></tr>
+<tr><td class="menu"><a href="contacts.html">Contacts</td></tr>
+</table>
+</td>
+
+<td valign="top" width="1000"><h1><img
+src="ti_dessus.gif" width="170" height="28"alt="-----------------------"><br>SMOLSR-MOLSR<br>  <img src="ti_dessous.gif" width="329" height="18"  alt="-----------------------"><br></h1>
+<h2>About</h2>
+<h3>What is SMOLSR/MOLSR ?</h3>
+
+MOLSR stands for Multicast OLSR. It is source tree based protocol.
+It maintains one multicast tree per tuple (source, multicast group). 
+It is designed as an extension for <a href="http://hipercom.inria.fr/oolsr">OOLSR implementation</a>.
+Data is dissiminated through out the multicast trees to reach all the nodes
+that has join a specific multicast group.
+<p>
+SMOLSR stands for Simple Multicast OLSR. In this case no multicast tree is built.
+Data is flooded to the entire network using the OLSR genuine technique of MPR.
+
+<p>
+It is developped by team <a href="http://hipercom.inria.fr/">Hipercom</a>
+at <a href="http://www.inria.fr/">INRIA</a>.
+
+<p>
+OLSR itself is a routing protocol designed for wireless ad-hoc networks,
+and being proposed at the MANET working group of the 
+<a href="http://www.ietf.org/">IETF</a> ; more information on it is available
+on the <a href="http://hipercom.inria.fr/olsr/">OLSR page</a>
+
+
+<!-- <h3>How does it work ?</h3> -->
+<h3>What are its features ?</h3>
+SMOLSR/MOLSR is a modified version of OOLSR implementation. Its main
+task is to gather control and routing information. The data forwarding itself
+is done by a second daemon called MDFP (Multicast Data Forwarding Protocol).
+<p>
+MDFP is a forwarding protocol that enables a point to multipoint data 
+transfer. Multicast packets are captured and encapsulated in order to be forwarded to the entire
+network in case of simple multicast (SMOLSR), and inside a multicast tree in case of 
+multicast (MOLSR).
+<p>
+Forwarding rules are specified by SMOLSR/MOLSR daemon. Those rules consist
+of a set of information sent by SMOLSR/MOLSR to MDFP.
+
+<p>
+The actual version of MDFP is user space daemon based on Netfilter ipq 
+library. Basically, it listens to the captured packet sent by Netfilter to 
+the user space. A set of rules must be installed within Netfilter in order
+to capture the outgoing multicast packets and the incoming broadcast packets
+sent to MDFP.
+
+<h3>License</h3>
+This software is distributed under the
+<a href="http://www.gnu.org/copyleft/gpl.html">GPL license</a>.
+
+<h3>Related publications</h3>
+You can find 
+<a href="http://www.inria.fr/rrrt/rr-4721.html">here</a>
+the MOLSR specification.
+
+</td>
+</tr>
+</table>
+<br>
+<div class="modified">Last modification: Aug 2005
+</div></body>
+</html>
+

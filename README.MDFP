@@ -1,0 +1,99 @@
+---------------------------------------------------------------------------
+                                MDFP
+                  Projet Hipercom, INRIA Rocquencourt
+      Copyright 2004 Institut National de Recherche en Informatique et
+  en Automatique.  All rights reserved.  Distributed only with permission.
+---------------------------------------------------------------------------
+  
+              --------------------------------------------------
+                    This software is available at
+		    http://hipercom.inria.fr/SMOLSR-MOLSR/
+	      --------------------------------------------------
+						
+
+
+0- Introduction
+---------------
+
+This document describes how to compile and install the MDFP daemon
+(MDFP: Multicast Data Forwarding Protocol)
+
+
+1- License
+------------
+ 
+This code and files in this package are property of INRIA, project Hipercom.
+It is distributed under the GPL license, version 2 or later:
+see the file GPL-2.
+ 
+
+2-  MDFP Description
+---------------------
+MDFP is a forwarding protocol that enables a point to multipoint data 
+transfer. It is based on the MPR flooding of the OLSR protocol. Multicast
+packets are captured and encapsulated in order to be forwarded to the entire
+network in case of simple multicast (SMOLSR), and inside a multicast tree in case of 
+multicast (MOLSR). Forwarding rules are specified by OLSR daemon. Those rules consist
+of a set of information sent by OLSR to MDFP.
+With SMOLSR scheme, it includes (i) the list of 
+neighbor interfaces which belong to symmetric neighbors of the host, 
+(ii) the list of interfaces which belong to host MPR selectors, (iii) the main
+address of the host, and (iv) the interface list of the host. 
+
+
+With MOLSR scheme, it includes (i) the list of
+neighbor interfaces which belong to symmetric neighbors of the host,
+(ii), the multicast tree table built by MOLSR daemon (iii) the main
+address of the host, and (iv) the interface list of the host.
+
+Received packet which  are  not duplicated,  are decapsulted and given to the 
+upper layer.
+
+The actual version of MDFP is user space daemon based on Netfilter ipq 
+library. Basically, it listens to the captured packet sent by Netfilter to 
+the user space. A set of rules must be installed within Netfilter in order
+to capture the outgoing multicast packets and the incoming broadcast packets
+sent to MDFP.
+
+MDFP processes captured packets and send them back to the kernel
+with the corresponding verdict (DROP, ACCEPT). A copy of the packet that must 
+be forwarded or relayed, are encapsulated, and broadcasted using the UDP.
+
+3- Requirements
+---------------
+In this section we describe the system and the software required to make
+MDFP running.
+
+3.1- Software
+-------------
+MDFP needs a set of information to make decision on the captured packets.
+Those information are sent by a modified OLSR daemon runing in SMOLSR mode
+or MOLSR mode.
+
+3.2- System Requirements
+------------------------
+Linux 2.4 or 2.6 is required.
+
+MDFP processes captured data packets. This is accomplished by Netfilter that 
+enables packet filtering and mangling. Netfilter framework is included
+inside Linux kernels 2.4 and 2.6. 
+Netfilter can be either compiled with the kernel or loaded as a module.
+
+4- Compilation
+--------------
+Notice that MDFP uses the ipq library. This library must be installed  
+within reach of the compiler (right path) before compilling.
+
+Run 'make all' command. The generated binary file is called 'mangle'.
+
+5- Running
+----------
+The binary files must run with root previleges.
+In order to capture packets by Netfilter, we must specify the rules to follow. 
+This is specified in the script file 'netfilterConfigure.sh'.
+
+- Start the modified OOLSR daemon with '--molsrmode 1' option for MOLSR mode
+and  with '--molsrmode 0' option for SMOLSR mode (default mode).
+- Install the netfilter rules by running the script file.
+- Start mangle.
+

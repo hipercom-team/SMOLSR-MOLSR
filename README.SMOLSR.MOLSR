@@ -1,0 +1,54 @@
+---------------------------------------------------------------------------
+                                SMOLSR-MOLSR
+                 Projet Hipercom, INRIA Rocquencourt
+  Copyright 2004 Institut National de Recherche en Informatique et
+  en Automatique.  All rights reserved.  Distributed only with permission.
+---------------------------------------------------------------------------
+
+         --------------------------------------------------
+                   This software is available at
+                   http://hipercom.inria.fr/SMOLSR-MOLSR/
+         --------------------------------------------------
+
+
+I - Introduction
+----------------
+
+MOLSR stands for Multicast OLSR. It is source tree based protocol. It
+maintains one multicast tree per tuple (source, multicast group). It is
+designed as an extension for OOLSR implementation. Data is dissiminated
+through out the multicast trees to reach all the nodes that has join a
+specific multicast group.
+
+SMOLSR stands for Simple Multicast OLSR. In this case no multicast tree is
+built. Data is flooded to the entire network using the OLSR genuine
+technique of MPR. 
+
+II - License
+------------
+
+This code and files in this package are property of INRIA, project Hipercom.
+It is distributed under the GPL license, version 2 or later:
+see the file GPL-2.
+
+III - Compilation
+-----------------
+
+In short:
+  cd src && make molsr
+
+The normal result of the compilation is:
+  moolsrd (stripped version of daemon_core): the daemon itself
+
+IV - Running
+------------
+
+just run:
+    ./moolsrd -i <first iface> -i <second iface> ... <options>
+    
+By default SMOLSR mode is used. In order to start MOLSR mode you need to run
+   ./moolsrd -i <first iface> -i <second iface> ... --molsrmode 1 <options>
+   
+see OOLSR documentation for more information about the different available
+options
+    
